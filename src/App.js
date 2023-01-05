@@ -8,10 +8,14 @@ import Editor from './components/Editor';
 
 
 function App() {
-  const [notes, setNotes] = React.useState([])
+  const [notes, setNotes] = React.useState(() => JSON.parse(localStorage.getItem("notes")) || [])
     const [currentNoteId, setCurrentNoteId] = React.useState(
         (notes[0] && notes[0].id) || ""
     )
+    //save notes to localstorage
+    React.useEffect(() => {
+      localStorage.setItem("notes", JSON.stringify(notes))
+    },[notes])
     
     function createNewNote() {
         const newNote = {
